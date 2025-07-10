@@ -6,7 +6,7 @@
             {{-- Foto Siswa --}}
             <img
                 x-show="siswa.foto_siswa"
-                src="{{ route('foto.siswa', ['filename' => basename($siswa->foto_siswa)]) }}"
+                :src="`/foto/siswa/${siswa.foto_siswa?.split('/').pop()}`"
                 alt="Foto Siswa"
                 class="w-20 h-20 rounded-full object-cover mr-6 border-2 border-gray-300 shadow-sm"
             />
@@ -168,22 +168,18 @@
                         <span class="w-32 font-semibold text-gray-500"
                             >KTP Ayah</span
                         >
-                        @if ($siswa->ortu->dokumen_ktp_ayah)
-                        <a
-                            x-show="siswa.ortu.dokumen_ktp_ayah"
-                            href="{{ route('dokumen.ortu.unduh', ['ortu' => $siswa->ortu->id, 'jenis' => 'ktp_ayah']) }}"
-                            target="_blank"
-                            class="text-blue-600 hover:underline"
-                            >Lihat Dokumen</a
-                        >
-                        <span
-                            x-show="!siswa.ortu.dokumen_ktp_ayah"
-                            class="text-gray-500"
-                            >-</span
-                        >
-                        @else
-                        <span>-</span>
-                        @endif
+                        <template x-if="siswa.ortu?.dokumen_ktp_ayah">
+                            <a
+                                :href="`/ortu/${siswa.ortu.id}/dokumen/ktp_ayah`"
+                                target="_blank"
+                                class="text-blue-600 hover:underline"
+                            >
+                                Lihat Dokumen
+                            </a>
+                        </template>
+                        <template x-if="!siswa.ortu?.dokumen_ktp_ayah">
+                            <span class="text-gray-500">-</span>
+                        </template>
                     </div>
                 </div>
 
@@ -220,22 +216,18 @@
                         <span class="w-32 font-semibold text-gray-500"
                             >KTP Ibu</span
                         >
-                        @if ($siswa->ortu->dokumen_ktp_ibu)
-                        <a
-                            x-show="siswa.ortu.dokumen_ktp_ibu"
-                            href="{{ route('dokumen.ortu.unduh', ['ortu' => $siswa->ortu->id, 'jenis' => 'ktp_ibu']) }}"
-                            target="_blank"
-                            class="text-blue-600 hover:underline"
-                            >Lihat Dokumen</a
-                        >
-                        <span
-                            x-show="!siswa.ortu.dokumen_ktp_ibu"
-                            class="text-gray-500"
-                            >-</span
-                        >
-                        @else
-                        <span>-</span>
-                        @endif
+                        <template x-if="siswa.ortu?.dokumen_ktp_ibu">
+                            <a
+                                :href="`/ortu/${siswa.ortu.id}/dokumen/ktp_ibu`"
+                                target="_blank"
+                                class="text-blue-600 hover:underline"
+                            >
+                                Lihat Dokumen
+                            </a>
+                        </template>
+                        <template x-if="!siswa.ortu?.dokumen_ktp_ibu">
+                            <span class="text-gray-500">-</span>
+                        </template>
                     </div>
                 </div>
 
@@ -298,24 +290,18 @@
                         <span class="w-32 font-semibold text-gray-500"
                             >KTP Wali</span
                         >
-                        @if ($siswa->ortu->dokumen_ktp_wali)
-                        <a
-                            x-show="siswa.ortu.dokumen_ktp_wali"
-                            href="{{ route('dokumen.ortu.unduh', ['ortu' => $siswa->ortu->id, 'jenis' => 'ktp_wali']) }}"
-                            target="_blank"
-                            class="text-blue-600 hover:underline"
-                        >
-                            Lihat Dokumen
-                        </a>
-                        <span
-                            x-show="!siswa.ortu.dokumen_ktp_ayah"
-                            class="text-gray-500"
-                            >-</span
-                        >
-
-                        @else
-                        <span>-</span>
-                        @endif
+                        <template x-if="siswa.ortu?.dokumen_ktp_wali">
+                            <a
+                                :href="`/ortu/${siswa.ortu.id}/dokumen/ktp_wali`"
+                                target="_blank"
+                                class="text-blue-600 hover:underline"
+                            >
+                                Lihat Dokumen
+                            </a>
+                        </template>
+                        <template x-if="!siswa.ortu?.dokumen_ktp_wali">
+                            <span class="text-gray-500">-</span>
+                        </template>
                     </div>
                 </div>
 
@@ -345,7 +331,7 @@
                 class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm"
             >
                 <a
-                    href="{{ route('dokumen.siswa.unduh', ['siswa' => $siswa->id, 'jenis' => 'akta']) }}"
+                    :href="`/siswa/${siswa.id}/dokumen/akta`"
                     target="_blank"
                     class="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
                 >
@@ -368,7 +354,7 @@
                     >
                 </a>
                 <a
-                    href="{{ route('dokumen.siswa.unduh', ['siswa' => $siswa->id, 'jenis' => 'ijazah']) }}"
+                    :href="`/siswa/${siswa.id}/dokumen/ijazah`"
                     target="_blank"
                     class="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
                 >
@@ -391,7 +377,7 @@
                     >
                 </a>
                 <a
-                    href="{{ route('dokumen.siswa.unduh', ['siswa' => $siswa->id, 'jenis' => 'kk']) }}"
+                    :href="`/siswa/${siswa.id}/dokumen/kk`"
                     target="_blank"
                     class="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
                 >
@@ -412,7 +398,7 @@
                     <span class="mt-2 block font-medium text-gray-600">KK</span>
                 </a>
                 <a
-                    href="{{ route('dokumen.siswa.unduh', ['siswa' => $siswa->id, 'jenis' => 'rapor']) }}"
+                    :href="`/siswa/${siswa.id}/dokumen/rapor`"
                     target="_blank"
                     class="p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
                 >

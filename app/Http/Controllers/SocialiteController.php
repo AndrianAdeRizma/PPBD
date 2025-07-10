@@ -30,6 +30,14 @@ class SocialiteController extends Controller
             // dd($userFromGoogle); // Contoh: menampilkan informasi user dari Google
         } catch (\Exception $e) {
             // Tangani error jika otentikasi gagal
+            // dd([
+            //     'message' => $e->getMessage(),
+            //     'code' => $e->getCode(),
+            //     'file' => $e->getFile(),
+            //     'line' => $e->getLine(),
+            //     'trace' => $e->getTraceAsString(),
+            //     'previous' => $e->getPrevious() ? $e->getPrevious()->getMessage() : null,
+            // ]);
             dd("Terjadi kesalahan saat login dengan Google: " . $e->getMessage());
         }
         // Ambil user dari database berdasarkan google user id
@@ -43,6 +51,7 @@ class SocialiteController extends Controller
             try {
                 $newUser = User::create([
                     'google_id' => $userFromGoogle->getId(),
+                    'name' => $userFromGoogle->getName(),
                     'email' => $userFromGoogle->getEmail(),
                     'role' => 'siswa',
                     'password' => null,
@@ -67,15 +76,22 @@ class SocialiteController extends Controller
             // Login user yang baru dibuat
             auth('web')->login($newUser);
             session()->regenerate();
-
-            return redirect('dashboard');
+            // if ($userFromDatabase->role === 'admin') {
+            //     return redirect()->route('dashboard'); // Ganti dengan nama rute dashboard admin Anda
+            // } elseif ($userFromDatabase->role === 'siswa') {
+                return redirect()->route('pendaftaran'); // Ganti dengan nama rute profile siswa Anda
+            // }
         }
 
         // Jika ada user langsung login saja
         auth('web')->login($userFromDatabase);
         session()->regenerate();
 
-        return redirect('dashboard');
+        if ($userFromDatabase->role === 'admin') {
+            return redirect()->route('dashboard'); // Ganti dengan nama rute dashboard admin Anda
+        } elseif ($userFromDatabase->role === 'siswa') {
+            return redirect()->route('pendaftaran'); // Ganti dengan nama rute profile siswa Anda
+        }
     }
 
     public function logout(Request $request)

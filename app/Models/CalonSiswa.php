@@ -10,6 +10,7 @@ class CalonSiswa extends Model
     protected $primaryKey = 'id';
     protected $foreignKey = 'ortu_id';
     protected $fillable = [
+        'user_id',
         'nomor_pendaftaran', //21 digit
         'nama_lengkap',
         'nisn',
@@ -31,5 +32,10 @@ class CalonSiswa extends Model
     public function ortu()
     {
         return $this->belongsTo(OrtuSiswa::class, $this->ortu_id);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -59,7 +59,7 @@
                                     <th class="px-4 py-3">Asal Sekolah</th> -->
                                     <th class="px-4 py-3">Akta</th>
                                     <th class="px-4 py-3">Ijazah</th>
-                                    <th class="px-4 py-3">KK</th>
+                                    <th class="px-4 py-3">Kartu Keluarga</th>
                                     <th class="px-4 py-3">Rapor</th>
                                     <th class="px-4 py-3 text-center">Aksi</th>
                                 </tr>
@@ -73,7 +73,7 @@
                                         <img
                                             src="{{ route('foto.siswa', ['filename' => basename($siswa->foto_siswa)]) }}"
                                             alt="Foto"
-                                            class="w-14 h-14 rounded-md object-cover"
+                                            class="w-12 h-12 rounded-md object-cover"
                                         />
                                         @else
                                         <span class="text-gray-400 italic"
@@ -136,7 +136,7 @@
                                             <span
                                                 class="bg-violet-500 text-white px-2 py-1 rounded-lg font-medium"
                                             >
-                                                Akta
+                                                Ijazah
                                             </span>
                                         </a>
                                         @else
@@ -154,7 +154,7 @@
                                             <span
                                                 class="bg-violet-500 text-white px-2 py-1 rounded-lg font-medium"
                                             >
-                                                Akta
+                                                Kartu Keluarga
                                             </span>
                                         </a>
                                         @else
@@ -172,7 +172,7 @@
                                             <span
                                                 class="bg-violet-500 text-white px-2 py-1 rounded-lg font-medium"
                                             >
-                                                Akta
+                                                Nilai Rapor
                                             </span>
                                         </a>
                                         @else

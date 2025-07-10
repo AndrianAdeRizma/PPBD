@@ -10,8 +10,9 @@ return new class extends Migration
     {
         Schema::create('calon_siswa', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('ortu_id')->constrained('ortu_siswa')->onDelete('cascade');
-            $table->string('nomor_pendaftaran', 20)->unique();
+            $table->string('nomor_pendaftaran', 50)->unique();
             $table->string('nama_lengkap', 100);
             $table->string('nisn', 10)->unique();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);

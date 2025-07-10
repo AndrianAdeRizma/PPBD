@@ -49,6 +49,7 @@ class FileController extends Controller
                 }
                 break;
             case 'rapor':
+                // dd($siswa->dokumen_rapor);
                 $filename = $siswa->dokumen_rapor;
                 if ($filename) {
                     $path = $filename;

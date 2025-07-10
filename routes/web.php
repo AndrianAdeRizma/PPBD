@@ -8,11 +8,10 @@ use App\Http\Controllers\AuthController;
 
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\PendaftaranController;
-use App\Http\Controllers\AdminController; // Nanti kita buat
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FileController;
-
+use App\Http\Controllers\socialiteController as socialite;
 
 // Route untuk Halaman Depan
 Route::get('/', function () {
@@ -27,15 +26,17 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/admin', function () {
-    return 'Halo Admin!';
-})->middleware('auth');
+Route::middleware(['guest'])->group(function () {
+    Route::get('login/google/redirect', [socialite::class, 'redirect'])->name('redirect');
+    Route::get('login/google/callback', [socialite::class, 'callback'])->name('callback');
+});
+
+Route::get('profile-siswa/{id}', [SiswaController::class, 'profile'])->name('profile.siswa');
 
 
-Route::get('/pendaftaran', FormPendaftaran::class)->name('pendaftaran');
-Route::get('/pendaftaran/sukses', function () {
-    return view('pendaftaran-sukses');
-})->name('pendaftaran.sukses');
+// Route::middleware(['auth'])->group(function () {
+    Route::get('/pendaftaran', FormPendaftaran::class)->name('pendaftaran');
+// });
 
 // Route untuk Pendaftaran Siswa
 Route::get('/daftar', [PendaftaranController::class, 'create'])->name('pendaftaran.form');

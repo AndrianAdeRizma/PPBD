@@ -24,4 +24,8 @@
                    ' rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-red-500 transition duration-150'
     ]) }}
     >{{ old($name) }}</textarea>
+
+      @error($name)
+        <p class="text-sm text-red-600 mt-1">{{ $message }}</p>
+    @enderror
 </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CalonSiswa as Siswa;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class SiswaController extends  Controller
 {
@@ -32,5 +34,25 @@ class SiswaController extends  Controller
         }
 
         return response()->json($siswa);
+    }
+    public function profile($id)
+    {
+        try {
+            $nomorPendaftaran = Crypt::decryptString($id);
+        } catch (DecryptException $e) {
+            abort(404); // Jika gagal didekripsi
+        }
+
+        $siswa = Siswa::with('ortu')->where('nomor_pendaftaran', $nomorPendaftaran)->firstOrFail();
+
+        // dd($siswa);
+        return view(
+            'siswa.profile',
+            [
+                'title' => 'Profile Siswa',
+                'siswa' => $siswa,
+            ]
+
+        );
     }
 }

@@ -8,6 +8,8 @@ use App\Models\CalonSiswa;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class FormPendaftaran extends Component
@@ -29,6 +31,26 @@ class FormPendaftaran extends Component
 
     // Data Wali (Opsional)
     public $nama_wali, $tanggal_lahir_wali, $pekerjaan_wali, $nomor_telepon_wali, $dokumen_ktp_wali;
+
+    public function mount()
+    {
+        // 1. Cek apakah ada pengguna yang sedang login
+        if (Auth::check()) {
+            // 2. Cari data CalonSiswa yang user_id-nya cocok dengan ID pengguna yang login
+            $calonSiswa = CalonSiswa::where('user_id', Auth::id())->first();
+
+            // 3. Jika data biodata siswa sudah ditemukan
+            if ($calonSiswa) {
+                // Ambil nomor pendaftaran dan enkripsi
+                $encryptedNoRegistrasi = Crypt::encryptString($calonSiswa->nomor_pendaftaran);
+
+                // Arahkan pengguna ke halaman profil siswa mereka
+                // `redirect()->route()` akan melakukan pengalihan HTTP
+                return redirect()->route('profile.siswa', ['id' => $encryptedNoRegistrasi]);
+            }
+        }
+    }
+
 
     public function render()
     {
@@ -136,6 +158,7 @@ class FormPendaftaran extends Component
             $generatedNoRegistrasi = 'REG-' . now()->format('YmdHis') . rand(100, 999);
 
             CalonSiswa::create([
+                'user_id' => Auth::user()->id,
                 'ortu_id' => $ortu->id,
                 'nomor_pendaftaran' => $generatedNoRegistrasi,
                 'nama_lengkap' => $this->nama_lengkap,
@@ -157,7 +180,9 @@ class FormPendaftaran extends Component
             DB::commit();
 
             session()->flash('message', 'Pendaftaran berhasil disimpan!');
-            return redirect()->route('pendaftaran.berhasil');
+            $encrypted = Crypt::encryptString($generatedNoRegistrasi);
+            return redirect()->route('profile.siswa', ['id' => $encrypted]);
+            // return redirect()->route('pendaftaran.berhasil');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Gagal menyimpan pendaftaran: ' . $e->getMessage());
