@@ -34,6 +34,11 @@ class CalonSiswa extends Model
         return $this->belongsTo(OrtuSiswa::class, $this->ortu_id);
     }
 
+    public function pembayaran()
+    {
+        return $this->hasOne(Pembayaran::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

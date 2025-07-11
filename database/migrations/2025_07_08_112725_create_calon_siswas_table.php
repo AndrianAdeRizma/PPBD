@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('dokumen_ijazah', 255)->nullable();
             $table->string('dokumen_kk', 255)->nullable();
             $table->string('dokumen_rapor', 255)->nullable();
-            $table->enum('status_pendaftaran', ['pending', 'diverifikasi', 'diterima', 'ditolak'])->default('pending');
+            $table->enum('status_pendaftaran', ['pending', 'diverifikasi', 'ditolak',])->default('pending');
             $table->timestamps();
         });
     }

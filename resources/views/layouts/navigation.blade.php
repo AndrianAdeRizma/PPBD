@@ -13,7 +13,9 @@
                 </div>
 
                 <!-- Navigation Links -->
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @if(Auth::user()->role==="admin")
                     <x-nav-link
                         :href="route('dashboard')"
                         :active="request()->routeIs('dashboard')"
@@ -26,6 +28,40 @@
                     >
                         {{ __("Data Siswa") }}
                     </x-nav-link>
+                    <x-nav-link
+                        :href="route('pembayaran.index')"
+                        :active="request()->routeIs('pembayaran.index')"
+                    >
+                        {{ __("Pembayaran") }}
+                    </x-nav-link>
+                    @else
+                    <x-nav-link
+                        :href="route('profile.siswa',['id'=>Crypt::encryptString(Auth::user()->calonSiswa->nomor_pendaftaran)])"
+                        :active="request()->routeIs('profile.siswa',['id'=>Crypt::encryptString(Auth::user()->calonSiswa->nomor_pendaftaran)])"
+                    >
+                        {{ __("Profile") }}
+                    </x-nav-link>
+                    <x-nav-link
+                        :href="route('pembayaran.form')"
+                        :active="request()->routeIs('pembayaran.form')"
+                    >
+                        {{ __("Form Pembayaran") }}
+                    </x-nav-link>
+                    <x-nav-link
+                        :href="route('siswa.kartu.peserta',[
+'id' => Crypt::encryptString(Auth::user()->calonSiswa->id)
+                        ])"
+                        :active="request()->routeIs('siswa.kartu.peserta')"
+                    >
+                        {{ __("Kartu Peserta") }}
+                    </x-nav-link>
+                    <x-nav-link
+                        :href="route('pembayaran.form')"
+                        :active="request()->routeIs('pembayaran.form')"
+                    >
+                        {{ __("Nilai Test") }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 

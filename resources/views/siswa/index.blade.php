@@ -35,6 +35,14 @@
     >
         <div class="py-10">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                @if (session('success'))
+                <div
+                    class="mb-4 rounded-lg bg-green-100 p-4 text-sm text-green-700"
+                    role="alert"
+                >
+                    {{ session("success") }}
+                </div>
+                @endif
                 <div class="bg-white shadow-md rounded-lg p-6">
                     <div class="overflow-x-auto">
                         <table
@@ -51,17 +59,16 @@
                                     <th class="px-4 py-3">Nama</th>
                                     <th class="px-4 py-3">NISN</th>
                                     <th class="px-4 py-3">Jenis Kelamin</th>
-                                    <!--
-                                    <th class="px-4 py-3">TTL</th>
-                                    <th class="px-4 py-3">Agama</th>
-                                    <th class="px-4 py-3">Alamat</th>
-                                    <th class="px-4 py-3">No. Telepon</th>
-                                    <th class="px-4 py-3">Asal Sekolah</th> -->
                                     <th class="px-4 py-3">Akta</th>
                                     <th class="px-4 py-3">Ijazah</th>
                                     <th class="px-4 py-3">Kartu Keluarga</th>
-                                    <th class="px-4 py-3">Rapor</th>
-                                    <th class="px-4 py-3 text-center">Aksi</th>
+                                    <th class="px-4 py-3">NIlai Rapor</th>
+                                    <th class="px-6 py-3">Status Verifikasi</th>
+                                    <th
+                                        class="px-6 py-3 flex items-center justify-center"
+                                    >
+                                        Aksi
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -82,7 +89,12 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-2">
-                                        {{ $siswa->nomor_pendaftaran }}
+                                        <button
+                                            @click="getSiswaDetails({{ $siswa->id }})"
+                                            class="text-left rounded-md text-green-600 hover:text-green-800"
+                                        >
+                                            {{ $siswa->nomor_pendaftaran }}
+                                        </button>
                                     </td>
                                     <td class="px-4 py-2">
                                         {{ $siswa->nama_lengkap }}
@@ -93,22 +105,7 @@
                                     <td class="px-4 py-2">
                                         {{ $siswa->jenis_kelamin }}
                                     </td>
-                                    <!-- <td class="px-4 py-2">
-                                        {{ $siswa->tempat_lahir }},
-                                        {{ $siswa->tanggal_lahir }}
-                                    </td>
-                                    <td class="px-4 py-2">
-                                        {{ $siswa->agama }}
-                                    </td>
-                                    <td class="px-4 py-2">
-                                        {{ $siswa->alamat }}
-                                    </td>
-                                    <td class="px-4 py-2">
-                                        {{ $siswa->nomor_telepon }}
-                                    </td>
-                                    <td class="px-4 py-2">
-                                        {{ $siswa->asal_sekolah }}
-                                    </td> -->
+
                                     <td class="px-4 py-2">
                                         @if ($siswa->dokumen_akta)
                                         <a
@@ -116,7 +113,7 @@
                                             target="_blank"
                                         >
                                             <span
-                                                class="bg-violet-500 text-white px-2 py-1 rounded-lg font-medium"
+                                                class="bg-violet-500 text-xs text-white px-2 py-1 rounded-lg font-medium"
                                             >
                                                 Akta
                                             </span>
@@ -134,7 +131,7 @@
                                             target="_blank"
                                         >
                                             <span
-                                                class="bg-violet-500 text-white px-2 py-1 rounded-lg font-medium"
+                                                class="bg-violet-500 text-xs text-white px-2 py-1 rounded-lg font-medium"
                                             >
                                                 Ijazah
                                             </span>
@@ -152,7 +149,7 @@
                                             target="_blank"
                                         >
                                             <span
-                                                class="bg-violet-500 text-white px-2 py-1 rounded-lg font-medium"
+                                                class="bg-violet-500 text-xs text-white px-2 py-1 rounded-lg font-medium"
                                             >
                                                 Kartu Keluarga
                                             </span>
@@ -170,7 +167,7 @@
                                             target="_blank"
                                         >
                                             <span
-                                                class="bg-violet-500 text-white px-2 py-1 rounded-lg font-medium"
+                                                class="bg-violet-500 text-xs text-white px-2 py-1 rounded-lg font-medium"
                                             >
                                                 Nilai Rapor
                                             </span>
@@ -181,15 +178,102 @@
                                         </span>
                                         @endif
                                     </td>
+                                    <td>
+                                        @if ($siswa->status_pendaftaran ==
+                                        'ditolak')
+                                        <span
+                                            class="px-3 py-1 text-sm font-semibold leading-tight text-red-700 bg-red-100 rounded-full"
+                                        >
+                                            {{ $siswa->status_pendaftaran }}
+                                        </span>
+                                        @elseif ($siswa->status_pendaftaran ==
+                                        'diverifikasi')
+                                        <span
+                                            class="px-3 py-1 text-sm font-semibold leading-tight text-green-700 bg-green-100 rounded-full"
+                                        >
+                                            {{ $siswa->status_pendaftaran }}
+                                        </span>
+                                        @else
+                                        <span
+                                            class="px-3 py-1 text-sm font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full"
+                                        >
+                                            {{ $siswa->status_pendaftaran }}
+                                        </span>
+                                        @endif
+                                    </td>
                                     <td
-                                        width="65%"
-                                        class="px-4 py-4 my-2 text-center flex items-center0"
+                                        width="100%"
+                                        class="text-center flex items-center"
                                     >
+                                        {{-- Tampilkan tombol hanya jika statusnya masih 'menunggu_verifikasi' --}}
+                                        @if ($siswa->status_pendaftaran ==
+                                        'pending')
+                                        <div class="flex items-center gap-x-2">
+                                            <form
+                                                action="{{ route('siswa.verifikasi', $siswa->id) }}"
+                                                method="POST"
+                                            >
+                                                @csrf @method('PATCH')
+                                                <button
+                                                    type="submit"
+                                                    class="inline-flex items-center gap-x-2 text-xs rounded-md bg-green-600 px-2 py-2 text-white shadow-sm hover:bg-green-500"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 20 20"
+                                                        fill="currentColor"
+                                                        class="h-5 w-5"
+                                                    >
+                                                        <path
+                                                            fill-rule="evenodd"
+                                                            d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.052-.143Z"
+                                                            clip-rule="evenodd"
+                                                        />
+                                                    </svg>
+                                                    <span
+                                                        >Verifikasi</span
+                                                    >
+                                                </button>
+                                            </form>
+
+                                            <form
+                                                action="{{ route('siswa.tolak', $siswa->id) }}"
+                                                method="POST"
+                                            >
+                                                @csrf @method('PATCH')
+                                                <button
+                                                    type="submit"
+                                                    class="inline-flex items-center gap-x-2 text-xs rounded-md bg-red-600 px-2 py-2 text-white shadow-sm hover:bg-red-500"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 20 20"
+                                                        fill="currentColor"
+                                                        class="h-5 w-5"
+                                                    >
+                                                        <path
+                                                            d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"
+                                                        />
+                                                    </svg>
+                                                    <span>Tolak</span>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        @else
+                                        <p class="mt-4 text-sm text-gray-600">
+                                            Status pendaftaran siswa ini sudah
+                                            diproses:
+                                            <span
+                                                class="font-bold"
+                                                >{{ ucwords(str_replace('_', ' ', $siswa->status_pendaftaran)) }}</span
+                                            >
+                                        </p>
+                                        @endif
                                         <div
                                             class="flex justify-center items-center space-x-2"
                                         >
                                             {{-- INI TOMBOL PEMICU MODAL --}}
-                                            <button
+                                            <!-- <button
                                                 @click="getSiswaDetails({{ $siswa->id }})"
                                                 class="px-2 py-2 rounded-md text-white bg-green-600 hover:bg-green-800"
                                                 title="Detail"
@@ -209,7 +293,7 @@
                                                         clip-rule="evenodd"
                                                     />
                                                 </svg>
-                                            </button>
+                                            </button> -->
                                             <!-- <a
                                                 href="{{ route('siswa.edit', $siswa->id) }}"
                                                 class="px-2 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-800"
@@ -232,7 +316,7 @@
                                                 </svg>
                                             </a> -->
 
-                                            <form
+                                            <!-- <form
                                                 action="{{ route('siswa.delete', $siswa->id) }}"
                                                 method="POST"
                                                 onsubmit="return confirm('Yakin ingin menghapus siswa ini?')"
@@ -256,7 +340,7 @@
                                                         />
                                                     </svg>
                                                 </button>
-                                            </form>
+                                            </form> -->
                                         </div>
                                     </td>
                                 </tr>
