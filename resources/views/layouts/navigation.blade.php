@@ -38,7 +38,7 @@
                         :href="route('nilai.index')"
                         :active="request()->routeIs('nilai.index')"
                     >
-                        {{ __("Input Nilai") }}
+                        {{ __("Nilai Siswa") }}
                     </x-nav-link>
                     @else
                     <x-nav-link
