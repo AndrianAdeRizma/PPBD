@@ -44,7 +44,7 @@ class SiswaController extends  Controller
         try {
             $nomorPendaftaran = Crypt::decryptString($id);
         } catch (DecryptException $e) {
-            abort(404); // Jika gagal didekripsi
+            abort(404, 'Nomor pendaftaran tidak valid.'); // Jika gagal didekripsi
         }
 
         $siswa = Siswa::with('ortu')->where('nomor_pendaftaran', $nomorPendaftaran)->firstOrFail();

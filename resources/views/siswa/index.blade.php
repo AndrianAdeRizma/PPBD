@@ -184,20 +184,20 @@
                                         <span
                                             class="px-3 py-1 text-sm font-semibold leading-tight text-red-700 bg-red-100 rounded-full"
                                         >
-                                            {{ $siswa->status_pendaftaran }}
+                                            {{ ucfirst($siswa->status_pendaftaran) }}
                                         </span>
                                         @elseif ($siswa->status_pendaftaran ==
                                         'diverifikasi')
                                         <span
                                             class="px-3 py-1 text-sm font-semibold leading-tight text-green-700 bg-green-100 rounded-full"
                                         >
-                                            {{ $siswa->status_pendaftaran }}
+                                            {{ ucfirst($siswa->status_pendaftaran) }}
                                         </span>
                                         @else
                                         <span
                                             class="px-3 py-1 text-sm font-semibold leading-tight text-yellow-700 bg-yellow-100 rounded-full"
                                         >
-                                            {{ $siswa->status_pendaftaran }}
+                                            {{ ucfirst($siswa->status_pendaftaran) }}
                                         </span>
                                         @endif
                                     </td>
@@ -230,9 +230,7 @@
                                                             clip-rule="evenodd"
                                                         />
                                                     </svg>
-                                                    <span
-                                                        >Verifikasi</span
-                                                    >
+                                                    <span>Verifikasi</span>
                                                 </button>
                                             </form>
 

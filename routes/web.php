@@ -15,28 +15,24 @@ use App\Http\Controllers\PendaftaranController;
 use App\Http\Controllers\socialiteController as socialite;
 
 // Route untuk Halaman Depan
-Route::get('/', function () {
-    return view('landing.index');
-});
-
-Route::get('/tes', function () {
-    return view('test');
-});
-
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
 Route::middleware(['guest'])->group(function () {
-    Route::get('login/google/redirect', [socialite::class, 'redirect'])->name('redirect');
-    Route::get('login/google/callback', [socialite::class, 'callback'])->name('callback');
+    Route::get('/', function () {
+        return view('landing.index');
+    });
+
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
 });
 
-
-
+Route::get('login/google/redirect', [socialite::class, 'redirect'])->name('redirect');
+Route::get('login/google/callback', [socialite::class, 'callback'])->name('callback');
 Route::get('/pendaftaran', FormPendaftaran::class)->name('pendaftaran');
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::middleware(['auth', 'siswa'])->group(function () {
 
     Route::get('profile-siswa/{id}', [SiswaController::class, 'profile'])->name('profile.siswa');
 
@@ -45,38 +41,27 @@ Route::middleware(['auth'])->group(function () {
         ->name('pembayaran.') // nama rute untuk siswa
         ->group(function () {
             // Form pembayaran siswa
-            Route::get('/', [PembayaranController::class, 'index'])->name('index');
+            // Route::get('/', [PembayaranController::class, 'index'])->name('index');
             Route::get('/form', [PembayaranController::class, 'form'])->name('form');
             Route::post('/submit', [PembayaranController::class, 'submit'])->name('submit');
             Route::get('/edit', [PembayaranController::class, 'edit'])->name('edit');
             Route::put('/update', [PembayaranController::class, 'update'])->name('update');
-            Route::patch('/{pembayaran}/verifikasi', [PembayaranController::class, 'verifikasi'])->name('verifikasi');
-            Route::patch('/{pembayaran}/tolak', [PembayaranController::class, 'tolak'])->name('tolak');
+            // Route::patch('/{pembayaran}/verifikasi', [PembayaranController::class, 'verifikasi'])->name('verifikasi');
+            // Route::patch('/{pembayaran}/tolak', [PembayaranController::class, 'tolak'])->name('tolak');
 
-            Route::get('/bukti-pembayaran/{filename}', function ($filename) {
-                $path = storage_path('app/private/bukti-pembayaran/' . $filename);
-
-                Log::info("Coba buka file di path: " . $path);
-
-                if (!file_exists($path)) {
-                    abort(404, 'File tidak ditemukan.');
-                }
-
-                return response()->file($path);
-            })->where('filename', '.*')->name('bukti');
         });
 
-    // Cetak kartu siswa
-    // Route::get('/cetak-kartu/{siswa}', [KartuController::class, 'cetak'])->name('cetak.kartu');
+    Route::controller(SiswaController::class)
+        ->prefix('siswa') // prefix rute untuk siswa
+        ->name('siswa.') // nama rute untuk siswa
+        ->group(function () {
+            Route::get('/kartu-peserta', [SiswaController::class, 'kartuPeserta'])->name('kartu.peserta');
+            Route::get('/kartu-peserta/cetak', [SiswaController::class, 'cetakKartuPeserta'])->name('cetak.kartu.peserta');
+        });
 });
 
-// Route untuk Pendaftaran Siswa
-// Route::get('/daftar', [PendaftaranController::class, 'create'])->name('pendaftaran.form');
-// Route::post('/daftar', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
-// Route::get('/daftar/sukses', [PendaftaranController::class, 'sukses'])->name('pendaftaran.sukses');
-
 // Route khusus untuk Admin
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
 
     // Route untuk Dashboard Bawaan Breeze (sudah ada)
     Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
@@ -96,10 +81,16 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::patch('/{siswa}/verifikasi', [SiswaController::class, 'verifikasi'])->name('verifikasi');
             Route::patch('/{siswa}/tolak', [SiswaController::class, 'tolak'])->name('tolak');
-            Route::get('/kartu-peserta', [SiswaController::class, 'kartuPeserta'])->name('kartu.peserta');
-            Route::get('/kartu-peserta/cetak', [SiswaController::class, 'cetakKartuPeserta'])->name('cetak.kartu.peserta');
         });
-    // Rute untuk mengubah status siswa
+
+    Route::controller(PembayaranController::class)
+        ->prefix('pembayaran') // prefix rute untuk siswa
+        ->name('pembayaran.') // nama rute untuk siswa
+        ->group(function () {
+            Route::get('/', [PembayaranController::class, 'index'])->name('index');
+            Route::patch('/{pembayaran}/verifikasi', [PembayaranController::class, 'verifikasi'])->name('verifikasi');
+            Route::patch('/{pembayaran}/tolak', [PembayaranController::class, 'tolak'])->name('tolak');
+        });
 });
 
 Route::get('/preview-temp/{filename}', function ($filename) {
@@ -138,3 +129,16 @@ Route::get('/foto/siswa/{filename}', function ($filename) {
 
     return response()->file($path);
 })->name('foto.siswa');
+
+
+Route::get('/bukti-pembayaran/{filename}', function ($filename) {
+    $path = storage_path('app/private/bukti-pembayaran/' . $filename);
+
+    // Log::info("Coba buka file di path: " . $path);
+
+    if (!file_exists($path)) {
+        abort(404, 'File tidak ditemukan.');
+    }
+
+    return response()->file($path);
+})->where('filename', '.*')->name('pembayaran.bukti');

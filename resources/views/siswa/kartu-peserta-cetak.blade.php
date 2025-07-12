@@ -26,8 +26,9 @@
             .card {
                 /* Mengurangi lebar kartu agar lebih proporsional seperti di gambar */
                 width: 75mm; /* Lebar kartu disesuaikan agar tidak terlalu lebar */
-                margin-top: 20mm; /* Margin atas untuk jarak dari tepi atas halaman */
-                margin-bottom: 20mm; /* Margin bawah */
+        
+                margin: 50px 50px 50px 50px;
+
                 display: inline-block; /* Penting untuk penengahan dengan text-align: center */
                 background-color: white;
                 border: 1px solid #e5e7eb; /* Border seperti di gambar */
@@ -128,7 +129,7 @@
                 {{-- Logo sekolah, diakses dari storage path untuk DOMPDF --}}
                 {{-- Pastikan path ini benar-benar mengarah ke file logo yang ada --}}
                 <img
-                    src="{{ storage_path('app/private/logo/logo.png') }}"
+                    src="{{ storage_path('app/public/logo/logo.png') }}"
                     alt="Logo Sekolah"
                     class="logo"
                 />
@@ -143,14 +144,18 @@
                 <tr>
                     <td class="photo-cell">
                         <div class="photo-placeholder">
-                            @if($siswa->foto_siswa &&
-                            file_exists(storage_path('app/private/foto/siswa/' .
-                            $siswa->foto_siswa)))
+                            @if($siswa->foto_siswa)
                             {{-- Foto siswa, diakses dari storage path untuk DOMPDF --}}
                             <img
-                                src="{{ storage_path('app/private/foto/siswa/' . $siswa->foto_siswa) }}"
+                                src="{{ storage_path('app/private/foto/siswa/' . basename($siswa->foto_siswa))}}"
                                 alt="Foto Peserta"
                                 class="profile-photo"
+                                {{--
+                                Menggunakan
+                                class
+                                yang
+                                benar
+                                --}}
                             />
                             @else
                             <span>Foto 3x4</span>
