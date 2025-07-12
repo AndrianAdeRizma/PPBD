@@ -34,6 +34,12 @@
                     >
                         {{ __("Pembayaran") }}
                     </x-nav-link>
+                    <x-nav-link
+                        :href="route('nilai.index')"
+                        :active="request()->routeIs('nilai.index')"
+                    >
+                        {{ __("Input Nilai") }}
+                    </x-nav-link>
                     @else
                     <x-nav-link
                         :href="route('profile.siswa',['id'=>Crypt::encryptString(Auth::user()->calonSiswa->nomor_pendaftaran)])"
@@ -49,17 +55,19 @@
                     </x-nav-link>
                     <x-nav-link
                         :href="route('siswa.kartu.peserta',[
-'id' => Crypt::encryptString(Auth::user()->calonSiswa->id)
+                        'id' => Crypt::encryptString(Auth::user()->calonSiswa->id)
                         ])"
                         :active="request()->routeIs('siswa.kartu.peserta')"
                     >
                         {{ __("Kartu Peserta") }}
                     </x-nav-link>
                     <x-nav-link
-                        :href="route('pembayaran.form')"
-                        :active="request()->routeIs('pembayaran.form')"
+                        :href="route('nilai.siswa',[
+                        'id' => Crypt::encryptString(Auth::user()->calonSiswa->id)
+                        ])"
+                        :active="request()->routeIs('nilai.siswa')"
                     >
-                        {{ __("Nilai Test") }}
+                        {{ __("Nilai Siswa") }}
                     </x-nav-link>
                     @endif
                 </div>

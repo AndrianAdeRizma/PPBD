@@ -224,9 +224,11 @@
                             <ul
                                 class="list-disc list-inside text-gray-600 space-y-2"
                             >
-                                <li>Pendaftaran: 1 Juli - 15 Juli 2025</li>
-                                <li>Seleksi Berkas: 16 Juli - 18 Juli 2025</li>
-                                <li>Pengumuman: 20 Juli 2025</li>
+                                <li>Pendaftaran: 1 Juli - 14 Agustus 2025</li>
+                                <li>
+                                    Seleksi Berkas: 16 Agustus - 26 Agustus 2025
+                                </li>
+                                <li>Pengumuman: 30 Agustus 2025</li>
                             </ul>
                         </div>
                         <!-- Persyaratan Card -->
@@ -241,7 +243,8 @@
                             <p class="text-gray-600">
                                 Siapkan scan Kartu Keluarga, Akta Kelahiran, dan
                                 Ijazah/SKL dari sekolah sebelumnya dalam format
-                                PDF/JPG (maks 2MB).
+                                PDF (maks 2MB) dan foto 3x4 (maks 2MB) untuk
+                                mengisi formulir pendaftaran.
                             </p>
                         </div>
                     </div>

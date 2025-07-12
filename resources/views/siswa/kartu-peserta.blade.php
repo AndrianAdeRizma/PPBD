@@ -72,15 +72,19 @@
             </div>
         </div>
         @else
-        <div class="w-full h-full max-w-md mx-auto rounded-xl shadow-lg p-6">
+        {{-- Jika belum diverifikasi --}}
+        <div
+            class="w-full h-full flex mt-12 max-w-md mx-auto rounded shadow p-6 bg-white"
+        >
             <div
-                class="border border-blue-200 rounded-lg p-4 text-sm text-blue-800"
+                class="border border-blue-200 bg-blue-50 rounded-lg p-4 text-sm text-blue-800 w-full"
             >
+                <strong>Informasi:</strong>
                 <p class="mt-2">
-                    <strong>Informasi:</strong>
-                    Kartu peserta ujian belum siap untuk dicetak. Pastikan
-                    pendaftaraan dan pembayaran telah dikonfirmasi oleh panitia
-                    sekolah.
+                    Kartu peserta ujian belum tersedia. Pastikan status
+                    <strong>pendaftaran</strong> dan
+                    <strong>pembayaran</strong> Anda telah diverifikasi oleh
+                    panitia.
                 </p>
             </div>
         </div>

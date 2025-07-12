@@ -34,7 +34,7 @@
         class="container w-full mx-auto px-4 sm:px-6 lg:px-8"
     >
         <div class="py-10">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="sm:px-6 lg:px-8">
                 @if (session('success'))
                 <div
                     class="mb-4 rounded-lg bg-green-100 p-4 text-sm text-green-700"
@@ -212,10 +212,11 @@
                                             <form
                                                 action="{{ route('siswa.verifikasi', $siswa->id) }}"
                                                 method="POST"
+                                                id="form-verifikasi-{{ $siswa->id }}"
                                             >
                                                 @csrf @method('PATCH')
                                                 <button
-                                                    type="submit"
+                                                    onclick="confirmVerifikasi({{ $siswa->id }}, '{{ $siswa->nama_lengkap }}')"
                                                     class="inline-flex items-center gap-x-2 text-xs rounded-md bg-green-600 px-2 py-2 text-white shadow-sm hover:bg-green-500"
                                                 >
                                                     <svg
@@ -237,10 +238,11 @@
                                             <form
                                                 action="{{ route('siswa.tolak', $siswa->id) }}"
                                                 method="POST"
+                                                id="form-tolak-{{ $siswa->id }}"
                                             >
                                                 @csrf @method('PATCH')
                                                 <button
-                                                    type="submit"
+                                                    onclick="confirmTolak({{ $siswa->id }}, '{{ $siswa->nama_lengkap }}')"
                                                     class="inline-flex items-center gap-x-2 text-xs rounded-md bg-red-600 px-2 py-2 text-white shadow-sm hover:bg-red-500"
                                                 >
                                                     <svg
@@ -363,6 +365,42 @@
     </div>
 
     @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmVerifikasi(id, nama) {
+            Swal.fire({
+                title: "Verifikasi Siswa?",
+                text: `Apakah Anda yakin ingin memverifikasi pendaftaran siswa: ${nama}?`,
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#16a34a",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, Verifikasi!",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("form-verifikasi-" + id).submit();
+                }
+            });
+        }
+
+        function confirmTolak(id, nama) {
+            Swal.fire({
+                title: "Tolak Pendaftaran?",
+                text: `Apakah Anda yakin ingin menolak pendaftaran siswa: ${nama}?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#dc2626",
+                cancelButtonColor: "#6b7280",
+                confirmButtonText: "Ya, Tolak!",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById("form-tolak-" + id).submit();
+                }
+            });
+        }
+    </script>
     <script>
         // [PERBAIKAN] Menggunakan $(document).ready() dari jQuery agar lebih konsisten
         $(document).ready(function () {

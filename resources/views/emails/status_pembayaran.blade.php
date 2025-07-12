@@ -1,30 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
     <head>
+        <meta charset="UTF-8" />
         <title>Update Status Pembayaran</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background-color: #f4f4f4;
+                padding: 20px;
+                margin: 0;
+            }
+            .container {
+                max-width: 600px;
+                background: #ffffff;
+                margin: 0 auto;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
+            }
+            .logo {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .logo img {
+                height: 60px;
+            }
+            h2 {
+                color: #000000;
+            }
+            .footer {
+                margin-top: 40px;
+                font-size: 0.85em;
+                color: #777;
+                text-align: center;
+            }
+            h1 {
+                color: #0056b3;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        </style>
     </head>
     <body>
-        {{-- Asumsi ada relasi dari Pembayaran ke CalonSiswa --}}
-        <h2>Halo, {{ $pembayaran->calonSiswa->nama_lengkap }}!</h2>
+        <div class="container">
+            {{-- Logo Sekolah --}}
+            <div class="logo">
+                <img
+                    src="{{ $message->embed(public_path('logo/logo.png')) }}"
+                    alt="Logo Sekolah"
+                />
+            </div>
 
-        <p>
-            Terima kasih telah melakukan pembayaran untuk pendaftaran siswa
-            baru. Berikut adalah update status pembayaran Anda:
-        </p>
+            <h1>Informasi Status Pembayaran</h1>
 
-        <p><strong>Pesan dari Panitia:</strong></p>
-        <p>
-            <em>{{ $pesan }}</em>
-        </p>
+            {{-- Konten Email --}}
+            <h2>Halo, {{ $pembayaran->calonSiswa->nama_lengkap }}!</h2>
 
-        <p>
-            Status pembayaran Anda saat ini adalah:
-            <strong>{{ ucfirst($pembayaran->status_pembayaran) }}</strong>
-        </p>
+            <p>
+                Terima kasih telah melakukan pembayaran untuk pendaftaran siswa
+                baru. Berikut adalah update status pembayaran Anda:
+            </p>
 
-        <p>Jika ada pertanyaan, silakan hubungi kami.</p>
-        <br />
-        <p>Hormat kami,</p>
-        <p>Panitia Penerimaan Peserta Didik Baru</p>
+            <p><strong>Pesan dari Panitia:</strong></p>
+            <p>
+                <em>{{ $pesan }}</em>
+            </p>
+
+            <p>
+                Status pembayaran Anda saat ini adalah:
+                <strong>{{ ucfirst($pembayaran->status_pembayaran) }}</strong>
+            </p>
+
+            <p>
+                Jika ada pertanyaan, silakan hubungi kami melalui kontak resmi
+                sekolah.
+            </p>
+
+            <p>Hormat kami,</p>
+            <p>Panitia {{ config("app.name") }}</p>
+
+            <div class="footer">
+                &copy; {{ date("Y") }} {{ config("app.name") }}. Semua hak
+                dilindungi.
+            </div>
+        </div>
     </body>
 </html>

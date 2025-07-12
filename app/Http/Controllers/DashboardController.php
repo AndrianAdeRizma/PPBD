@@ -11,8 +11,10 @@ class DashboardController extends Controller
     public function index()
     {
         $totalCalon = Siswa::count();
-        $totalDiterima = Siswa::where('status_pendaftaran', 'diterima')->count();
-        $totalDitolak = Siswa::where('status_pendaftaran', 'ditolak')->count();
+
+        $totalDiterima = Siswa::where('status_kelulusan', 'lulus')->count();
+
+        $totalDitolak = Siswa::where('status_kelulusan', 'tidak_lulus')->count();
 
         $jumlahPerTahun = Siswa::selectRaw('YEAR(created_at) as tahun, COUNT(*) as total')
             ->groupBy('tahun')

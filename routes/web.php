@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PembayaranController;
@@ -58,14 +59,28 @@ Route::middleware(['auth', 'siswa'])->group(function () {
             Route::get('/kartu-peserta', [SiswaController::class, 'kartuPeserta'])->name('kartu.peserta');
             Route::get('/kartu-peserta/cetak', [SiswaController::class, 'cetakKartuPeserta'])->name('cetak.kartu.peserta');
         });
+
+    Route::controller(NilaiController::class)->prefix('nilai')->name('nilai.')->group(function () {
+        Route::get('nilai-siswa/{id}', 'getNilaiSiswa')->name('siswa');
+    });
 });
 
 // Route khusus untuk Admin
 Route::middleware(['auth', 'admin'])->group(function () {
-
-    // Route untuk Dashboard Bawaan Breeze (sudah ada)
     Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
         Route::get('/', 'index')->name('dashboard');
+    });
+
+    Route::controller(NilaiController::class)->prefix('nilai')->name('nilai.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        // Route::get('/detail/{id}', 'detail')->name('detail');
+        // Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/store', 'store')->name('store');
+        Route::put('/nilai/{nilai_tes}', 'update')->name('nilai.update');
+        // Route::delete('/delete/{id}', 'delete')->name('delete');
+        Route::put('/{nilai}', 'update')->name('update');
+        // Pastikan ini ada di dalam grup route yang mengarahkan ke NilaiController
+        Route::post('/send-graduation-email/{id}', 'sendGraduationEmail')->name('send_graduation_email');
     });
 
     // Route untuk Halaman data calon siswa

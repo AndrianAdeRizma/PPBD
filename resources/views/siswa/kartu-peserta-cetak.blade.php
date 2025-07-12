@@ -26,7 +26,7 @@
             .card {
                 /* Mengurangi lebar kartu agar lebih proporsional seperti di gambar */
                 width: 75mm; /* Lebar kartu disesuaikan agar tidak terlalu lebar */
-        
+
                 margin: 50px 50px 50px 50px;
 
                 display: inline-block; /* Penting untuk penengahan dengan text-align: center */
@@ -183,7 +183,7 @@
 
             <div class="info-box">
                 <p>
-                    <strong>Informasi:</strong> Harap membawa kartu ini saat
+                    <strong>Catatan:</strong> Harap membawa kartu ini saat
                     seleksi ujian masuk PPDB.
                 </p>
             </div>

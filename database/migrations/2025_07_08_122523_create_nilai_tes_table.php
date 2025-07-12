@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('calon_siswa_id')->constrained('calon_siswa')->onDelete('cascade');
             $table->decimal('jumlah_nilai', 5, 2); // contoh: max 999.99
-            $table->enum("keterangan", ["Mencukupi", "Tidak Mecukupi"])->nullable();
+            $table->enum("keterangan", ["Mencukupi", "Tidak Mencukupi", "Belum Dinilai"])->default("Belum Dinilai");
             $table->timestamps();
         });
     }

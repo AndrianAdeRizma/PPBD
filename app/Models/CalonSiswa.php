@@ -26,6 +26,8 @@ class CalonSiswa extends Model
         'dokumen_ijazah',
         'dokumen_kk',
         'dokumen_rapor',
+        'status_pendaftaran',
+        'status_kelulusan',
         'ortu_id', // jika menggunakan relasi
     ];
 
@@ -42,5 +44,10 @@ class CalonSiswa extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function nilai()
+    {
+        return $this->hasOne(Nilai::class, 'calon_siswa_id'); // Menggunakan calon_siswa_id
     }
 }

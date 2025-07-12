@@ -32,8 +32,12 @@
     @else
 
     <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg">
+        <form method="POST" action="{{ route('logout') }}" id="logout-form">
+            @csrf
+            <button type="submit" style="display: none">Logout</button>
+        </form>
         <button
-            onclick="window.location.href = '/'"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
             class="bg-blue-200 hover:bg-blue-300 text-blue-800 p-3 rounded-full inline-flex items-center justify-center"
         >
             <svg
@@ -191,6 +195,7 @@
                     wire:model="foto_siswa"
                     required
                     placeholder="Isi Foto Siswa"
+                    accept="image/jpeg, image/png, image/jpg"
                 />
                 <x-form.preview-upload
                     :file="$foto_siswa"

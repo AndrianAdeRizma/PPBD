@@ -5,55 +5,57 @@
         </h2>
     </x-slot>
 
-    <div class="py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            {{-- STATISTIK --}}
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white shadow-md rounded-lg p-5">
-                    <h3 class="text-gray-600 text-sm">Total Calon Siswa</h3>
-                    <p class="text-3xl font-bold text-blue-600 mt-2">
-                        {{ $totalCalon }}
-                    </p>
+    <div class="container w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="py-10">
+            <div class="sm:px-6 lg:px-8 space-y-6">
+                {{-- STATISTIK --}}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white shadow-md rounded-lg p-5">
+                        <h3 class="text-gray-600 text-sm">Total Calon Siswa</h3>
+                        <p class="text-3xl font-bold text-blue-600 mt-2">
+                            {{ $totalCalon }}
+                        </p>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg p-5">
+                        <h3 class="text-gray-600 text-sm">Diterima</h3>
+                        <p class="text-3xl font-bold text-green-600 mt-2">
+                            {{ $totalDiterima }}
+                        </p>
+                    </div>
+                    <div class="bg-white shadow-md rounded-lg p-5">
+                        <h3 class="text-gray-600 text-sm">Tidak Diterima</h3>
+                        <p class="text-3xl font-bold text-red-600 mt-2">
+                            {{ $totalDitolak }}
+                        </p>
+                    </div>
                 </div>
-                <div class="bg-white shadow-md rounded-lg p-5">
-                    <h3 class="text-gray-600 text-sm">Diterima</h3>
-                    <p class="text-3xl font-bold text-green-600 mt-2">
-                        {{ $totalDiterima }}
-                    </p>
-                </div>
-                <div class="bg-white shadow-md rounded-lg p-5">
-                    <h3 class="text-gray-600 text-sm">Tidak Diterima</h3>
-                    <p class="text-3xl font-bold text-red-600 mt-2">
-                        {{ $totalDitolak }}
-                    </p>
-                </div>
-            </div>
 
-            {{-- CHART --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {{-- Pie Chart: Jenis Kelamin --}}
+                {{-- CHART --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {{-- Pie Chart: Jenis Kelamin --}}
+                    <div class="bg-white rounded-lg shadow-md p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">
+                            Jenis Kelamin
+                        </h3>
+                        <div id="chart-gender" class="h-64"></div>
+                    </div>
+
+                    {{-- Donut Chart: Usia --}}
+                    <div class="bg-white rounded-lg shadow-md p-4">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">
+                            Rata-rata Usia
+                        </h3>
+                        <div id="chart-usia" class="h-64"></div>
+                    </div>
+                </div>
+
+                {{-- Bar Chart: Tahun --}}
                 <div class="bg-white rounded-lg shadow-md p-4">
                     <h3 class="text-lg font-semibold text-gray-700 mb-2">
-                        Distribusi Jenis Kelamin
+                        Jumlah Pendaftar per Tahun
                     </h3>
-                    <div id="chart-gender" class="h-64"></div>
+                    <div id="chart-tahun" class="h-72"></div>
                 </div>
-
-                {{-- Donut Chart: Usia --}}
-                <div class="bg-white rounded-lg shadow-md p-4">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-2">
-                        Rata-rata Usia
-                    </h3>
-                    <div id="chart-usia" class="h-64"></div>
-                </div>
-            </div>
-
-            {{-- Bar Chart: Tahun --}}
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">
-                    Jumlah Pendaftar per Tahun
-                </h3>
-                <div id="chart-tahun" class="h-72"></div>
             </div>
         </div>
     </div>

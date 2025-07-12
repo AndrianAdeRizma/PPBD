@@ -71,7 +71,8 @@ class FormPendaftaran extends Component
                 'nomor_telepon' => 'required|string',
                 'asal_sekolah' => 'required|string',
 
-                'foto_siswa' => 'required|file|image|max:2048',
+                // 'foto_siswa' => 'required|file|image|max:2048',
+                'foto_siswa' => 'required|file|mimes:png,jpg,jpeg|max:2048',
                 'dokumen_akta' => 'required|file|mimes:pdf|max:2048',
                 'dokumen_ijazah' => 'required|file|mimes:pdf|max:2048',
                 'dokumen_kk' => 'required|file|mimes:pdf|max:2048',
@@ -97,6 +98,7 @@ class FormPendaftaran extends Component
                 'foto_siswa.required' => 'Foto siswa wajib diunggah.',
                 'foto_siswa.image' => 'Foto siswa harus berupa file gambar.',
                 'foto_siswa.max' => 'Ukuran foto siswa tidak boleh lebih dari 2MB.',
+                'foto_siswa.mimes' => 'Format foto siswa harus PDF, JPG, atau PNG.',
 
                 'dokumen_akta.required' => 'Dokumen akta kelahiran wajib diunggah.',
                 'dokumen_akta.mimes' => 'Format akta kelahiran harus PDF, JPG, atau PNG.',
@@ -130,8 +132,8 @@ class FormPendaftaran extends Component
     public function submit()
     {
         $this->validate([
-            'nama_ayah' => 'nullable|string',
-            'nama_ibu' => 'nullable|string',
+            'nama_ayah' => 'required|string',
+            'nama_ibu' => 'required|string',
         ]);
 
         DB::beginTransaction();

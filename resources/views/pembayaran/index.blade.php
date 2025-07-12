@@ -7,7 +7,7 @@
 
     <div class="container w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="py-10">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="sm:px-6 lg:px-8">
                 @if (session('success'))
                 <div
                     class="mb-4 rounded-lg bg-green-100 p-4 text-sm text-green-700"
@@ -140,10 +140,12 @@
                                             <form
                                                 action="{{ route('pembayaran.verifikasi', $row->id) }}"
                                                 method="POST"
+                                                id="form-verifikasi-pembayaran-{{ $row->id }}"
                                             >
                                                 @csrf @method('PATCH')
                                                 <button
-                                                    type="submit"
+                                                    type="button"
+                                                    onclick="confirmVerifikasiPembayaran({{ $row->id }}, '{{ $row->calonSiswa->nama_lengkap ?? 'Siswa' }}')"
                                                     class="inline-flex items-center gap-x-2 rounded-md bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500"
                                                 >
                                                     <svg
@@ -165,10 +167,12 @@
                                             <form
                                                 action="{{ route('pembayaran.tolak', $row->id) }}"
                                                 method="POST"
+                                                id="form-tolak-pembayaran-{{ $row->id }}"
                                             >
                                                 @csrf @method('PATCH')
                                                 <button
-                                                    type="submit"
+                                                    type="button"
+                                                    onclick="confirmTolakPembayaran({{ $row->id }}, '{{ $row->calonSiswa->nama_lengkap ?? 'Siswa' }}')"
                                                     class="inline-flex items-center gap-x-2 rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500"
                                                 >
                                                     <svg
@@ -214,7 +218,49 @@
             </div>
         </div>
     </div>
-    @push('scripts')
+    @push('scripts') @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmVerifikasiPembayaran(id, nama) {
+            Swal.fire({
+                title: "Verifikasi Pembayaran?",
+                text: `Apakah Anda yakin ingin memverifikasi pembayaran dari siswa: ${nama}?`,
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#16a34a",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, Verifikasi!",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document
+                        .getElementById("form-verifikasi-pembayaran-" + id)
+                        .submit();
+                }
+            });
+        }
+
+        function confirmTolakPembayaran(id, nama) {
+            Swal.fire({
+                title: "Tolak Pembayaran?",
+                text: `Apakah Anda yakin ingin menolak pembayaran dari siswa: ${nama}?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#dc2626",
+                cancelButtonColor: "#6b7280",
+                confirmButtonText: "Ya, Tolak!",
+                cancelButtonText: "Batal",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document
+                        .getElementById("form-tolak-pembayaran-" + id)
+                        .submit();
+                }
+            });
+        }
+    </script>
+    @endpush
+
     <script>
         // [PERBAIKAN] Menggunakan $(document).ready() dari jQuery agar lebih konsisten
         $(document).ready(function () {

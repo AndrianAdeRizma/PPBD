@@ -79,12 +79,10 @@ class SiswaController extends  Controller
             abort(403, 'Akses Ditolak. Pendaftaran Anda belum lengkap.');
         }
 
-        // --- Perubahan ada di sini ---
-        // 1. Muat view yang akan dijadikan PDF
-        $pdf = Pdf::loadView('siswa.kartu-peserta-cetak', ['siswa' => $siswa]);
+        $pdf = Pdf::loadView('siswa.kartu-peserta-cetak', compact('siswa'))
+            ->setPaper('A4', 'portrait');
 
-        // 2. Buat nama file yang dinamis dan mulai download
-        return $pdf->download('kartu-peserta-' . $siswa->nomor_pendaftaran . '.pdf');
+        return $pdf->download('Kartu_Peserta_' . $siswa->nama_lengkap . '.pdf');
     }
 
     public function verifikasi(Siswa $siswa)
