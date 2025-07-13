@@ -165,6 +165,7 @@
                                 value="{{ old('nama_pemilik_rekening', $pembayaran->nama_pemilik_rekening ?? '') }}"
                                 required
                             />
+                            <x-input-error :messages="$errors->get('nama_pemilik_rekening')" class="mt-2" />
                         </div>
 
                         <div>
@@ -178,6 +179,7 @@
                                 value="{{ old('nomor_rekening', $pembayaran->nomor_rekening ?? '') }}"
                                 required
                             />
+                            <x-input-error :messages="$errors->get('nomor_rekening')" class="mt-2" />
                         </div>
 
                         <div>
@@ -188,6 +190,7 @@
                                 value="{{ old('bank', $pembayaran->bank ?? '') }}"
                                 required
                             />
+                            <x-input-error :messages="$errors->get('bank')" class="mt-2" />
                         </div>
 
                         <div>
@@ -202,6 +205,7 @@
                                 value="{{ old('jumlah_bayar', $pembayaran->jumlah_bayar ?? '') }}"
                                 required
                             />
+                            <x-input-error :messages="$errors->get('jumlah_bayar')" class="mt-2" />
                         </div>
 
                         <div>
@@ -216,6 +220,7 @@
                                 value="{{ old('tanggal_pembayaran', $pembayaran->tanggal_pembayaran ?? '') }}"
                                 required
                             />
+                            <x-input-error :messages="$errors->get('tanggal_pembayaran')" class="mt-2" />
                         </div>
 
                         <div>
@@ -228,7 +233,11 @@
                             name="bukti_pembayaran" class="block w-full pl-10
                             py-3 bg-slate-200/50 text-bold border-slate-600
                             focus:border-indigo-500 focus:ring-indigo-500"
-                            {{ $isEditing ? "" : "required" }}> @if($isEditing
+                            {{ $isEditing ? "" : "required" }}>
+
+                            <x-input-error :messages="$errors->get('bukti_pembayaran')" class="mt-2" />
+
+                                @if($isEditing
                             && $pembayaran->bukti_pembayaran)
                             <p class="mt-1 text-sm text-gray-500">
                                 File sebelumnya:
