@@ -19,7 +19,13 @@ class NilaiController extends Controller
         // PENTING: Eager load relasi 'nilai' dan 'pembayaran'
         // agar data nilai dan status pembayaran bisa diakses di view
         // dan Alpine.js bisa mendapatkan nilai_tes_id dari $siswa->nilai->id
-        $calonSiswa = Siswa::with('nilai', 'pembayaran')->get();
+        $calonSiswa = Siswa::with('nilai', 'pembayaran')
+            ->where('status_pendaftaran', 'diverifikasi')
+            ->whereHas('pembayaran', function ($query) {
+                $query->where('status_pembayaran', 'diverifikasi');
+            })
+            ->get();
+
         return view('nilai.index', compact('calonSiswa'));
     }
 
