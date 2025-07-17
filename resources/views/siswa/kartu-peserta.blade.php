@@ -56,7 +56,7 @@
                 <p><strong>Waktu:</strong> 08:00 WIT - Selesai</p>
                 <p><strong>Lokasi:</strong> Kampus SMA Papua Kasih</p> -->
                 <p class="mt-2">
-                    <strong>Informasi:</strong> Harap membawa kartu ini saat
+                    <strong>Catatan:</strong> Harap membawa kartu ini saat
                     seleksi ujian masuk PPDB.
                 </p>
             </div>
