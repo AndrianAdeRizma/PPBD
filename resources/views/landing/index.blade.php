@@ -5,6 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>PPDB - SMA PAPUA KASIH</title>
 
+        <link
+            rel="icon"
+            href="{{ asset('favicon/favicon.ico') }}"
+            type="image/x-icon"
+        />
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="{{ asset('favicon/apple-touch-icon.png') }}"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="{{ asset('favicon/favicon-32x32.png') }}"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="{{ asset('favicon/favicon-16x16.png') }}"
+        />
+
         <!-- Load Tailwind CSS CDN for modern styling -->
         <script src="https://cdn.tailwindcss.com"></script>
 
@@ -101,10 +124,15 @@
         <nav class="navbar-blur shadow-lg sticky top-0 z-50 rounded-b-xl">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
-                    <div class="flex-shrink-0">
+                    <div class="flex items-center">
+                        <img
+                            src="{{ asset('logo/logo.png') }}"
+                            class="block h-10 w-10 mr-2 fill-current text-gray-800"
+                            alt=""
+                        />
                         <a
                             href="#"
-                            class="text-2xl font-bold text-blue-700 outfit rounded-md"
+                            class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-500 via-pink-500 to-red-500 text-transparent bg-clip-text outfit rounded-md"
                         >
                             SMA PAPUA KASIH
                         </a>
