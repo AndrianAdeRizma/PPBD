@@ -1,10 +1,6 @@
 <x-app-layout>
     <div class="grid grid-cols-2 gap-4 max-w-7xl mx-auto">
-        @if (session('success'))
-        <div class="bg-green-100 text-black p-4 rounded mb-4">
-            {{ session("success") }}
-        </div>
-        @endif @if(!empty($siswa->status_pendaftaran=="diverifikasi"))
+        @if(!empty($siswa->status_pendaftaran=="diverifikasi"))
 
         <div class="col-span-1">
             <div
